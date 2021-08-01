@@ -1,0 +1,23 @@
+:root {
+	--bg-hijau: #43B63F;
+}
+
+
+.user-content {
+	height: 100%;
+	margin-top: 78px;
+	margin-bottom: 30px;
+}
+
+.hero-section{
+    text-align: center;
+}
+
+.bg-biru-muda{
+	background: rgb(178, 230, 171) !important;
+}
+
+nav .container .logo{
+	position: absolute;
+	left: 20px;
+}

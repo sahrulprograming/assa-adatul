@@ -13,7 +13,7 @@
                 <?= $this->session->flashdata('message'); ?>
                 <div class="border p-4 rounded">
                     <div class="card-title d-flex align-items-center">
-                        <div><i class="bx bxs-file me-1 font-22 text-info"></i>
+                        <div><i class="bx bxs-user-pin me-1 font-22 text-info"></i>
                         </div>
                         <h5 class="mb-0 text-info"><?= $judul; ?></h5>
                     </div>
@@ -75,7 +75,7 @@
                                 </div>
                             <?php elseif ($keys === 'no_telp') : ?>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" id="<?= $keys; ?>" name="<?= $keys; ?>" value="<?= $admin[$keys]; ?>" placeholder="<?= str_replace("_", " ", $keys); ?>" readonly>
+                                    <input type="number" class="form-control" id="<?= $keys; ?>" name="<?= $keys; ?>" value="<?= $admin[$keys]; ?>" placeholder="<?= str_replace("_", " ", $keys); ?>">
                                     <?= form_error($keys, '<small class="text-danger">', '</small>'); ?>
                                 </div>
                             <?php else : ?>

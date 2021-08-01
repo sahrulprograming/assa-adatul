@@ -15,6 +15,11 @@ class M_admin_select extends CI_Model
         return $this->db->get_where($table, $where)->result_array();
     }
 
+    public function select_row($table, $jumlah)
+    {
+        return $this->db->query("SELECT * FROM $table LIMIT $jumlah")->result_array();
+    }
+
     // select data admin
     public function data_profile($table, $where)
     {

@@ -169,4 +169,74 @@ class M_admin_insert extends CI_Model
             $this->load->view('template/admin/footer');
         }
     }
+    public function tambah_pengguna($data)
+    {
+        $isi = [
+            'is_active' => "Y",
+            'password' => md5("admin" . date("Y"))
+        ];
+        $hasil = [];
+        foreach (array_slice(array_keys($data), 1, 8) as $keys) {
+            if ($keys === 'foto') {
+                $foto = $_FILES[$keys]['name'];
+                if ($foto) {
+                    $config['allowed_types'] = 'jpg|png|jpeg';
+                    $config['max_size']     = '2048';
+                    $config['upload_path'] = './assets/pribadi/img/admin/';
+                    $config['file_name'] = 'gambar' . time();
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('foto')) {
+                        $foto = $this->upload->data('file_name');
+                        $isi['foto'] = $foto;
+                    } else {
+                        $error = $this->upload->display_errors();
+                        $pesan = <<<EOL
+                        <div class="alert alert-success border-0 bg-success alert-dismissible fade show">
+                        <div class="text-white">$error</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        EOL;
+                        $this->session->set_flashdata('message', $pesan);
+                        redirect('admin/pengguna/tambah_pengguna');
+                    }
+                } else {
+                    $isi['foto'] = 'default-' . $data['jenis_kelamin'] . '.jpg';
+                }
+            } else {
+                $isi[$keys] = $this->input->post($keys);
+            }
+        }
+        $this->db->insert('admin', $isi);
+        $result = $this->db->affected_rows();
+        if ($result > 0) {
+            $pesan = <<<EOL
+                <div class="alert alert-success border-0 bg-success alert-dismissible fade show">
+                    <div class="text-white">Berhasil menambah data pengguna!</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                EOL;
+            $this->session->set_flashdata('message', $pesan);
+            redirect('admin/pengguna');
+        } else {
+            $pesan = <<<EOL
+                <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
+                    <div class="text-white">Gagal menambah data pengguna!</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                EOL;
+            $this->session->set_flashdata('message', $pesan);
+            $data['admin'] = $this->M_admin_select->select_row('admin', 1);
+            $data['title'] = "Tambah Pengguna | " . $this->web;
+            $data['judul'] = "Tambah Pengguna";
+            $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
+            $data['kelas'] = $this->db->get('kelas')->result_array();
+            $this->load->view('template/admin/head', $data);
+            $this->load->view('template/admin/sidebar');
+            $this->load->view('template/admin/topbar');
+            $this->load->view('admin/pengguna/tambah_pengguna');
+            $this->load->view('template/admin/footer');
+        }
+    }
 }

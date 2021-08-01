@@ -111,7 +111,7 @@
                     <div class="row mb-3">
                         <label for="no_hp" class="col-sm-3 col-form-label">No Handphone</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="no_hp" name="no_hp" value="<?= set_value('no_hp'); ?>" placeholder="Masukan nomer handphone">
+                            <input type="number" class="form-control" id="no_hp" name="no_hp" value="<?= set_value('no_hp'); ?>" placeholder="Masukan nomer handphone">
                             <?= form_error('no_hp', '<small class="text-danger">', '</small>'); ?>
                         </div>
                     </div>

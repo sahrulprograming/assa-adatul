@@ -63,8 +63,10 @@ class Penilaian extends CI_Controller
             $data['kriteria'] = $this->db->get('kriteria')->result_array();
             foreach ($data['kriteria'] as $data_kriteria) {
                 $kriteria = str_replace(" ", "_", $data_kriteria['kriteria']);
-                $this->form_validation->set_rules($kriteria, $kriteria, 'required|trim', [
+                $this->form_validation->set_rules($kriteria, $kriteria, 'required|trim|less_than_equal_to[100]|greater_than_equal_to[0]', [
                     'required' => "nilai " . str_replace("_", " ", $kriteria) . " wajib di isi",
+                    'less_than_equal_to' => "nilai " . str_replace("_", " ", $kriteria) . " tidak boleh melebihi 100",
+                    'greater_than_equal_to' => "nilai " . str_replace("_", " ", $kriteria) . " tidak boleh kurang dari 0",
                 ]);
             }
             if ($this->form_validation->run() === FALSE) {

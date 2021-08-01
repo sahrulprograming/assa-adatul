@@ -58,8 +58,10 @@ class Siswa extends CI_Controller
     }
     public function tambah_siswa()
     {
-        $this->form_validation->set_rules('nama_lengkap', 'Nl', 'required|trim', [
+        $nama_lengkap = $this->input->post('nama_lengkap');
+        $this->form_validation->set_rules('nama_lengkap', 'Nl', "required|trim|is_unique[siswa.nama_lengkap]", [
             'required' => 'Nama lengkap wajib di isi',
+            'is_unique' => "nama $nama_lengkap sudah terdaftar",
         ]);
         $this->form_validation->set_rules('jenis_kelamin', 'jk', 'required|trim', [
             'required' => 'Jenis kelamin wajib di isi',
@@ -94,27 +96,7 @@ class Siswa extends CI_Controller
             $this->load->view('admin/siswa/tambah_siswa');
             $this->load->view('template/admin/footer');
         } else {
-            $nama_lengkap = $this->input->post('nama_lengkap');
-            $data_siswa = $this->M_admin_select->data_profile('siswa', ['nama_lengkap' => $nama_lengkap]);
-            if (!$data_siswa) {
-                $this->M_admin_insert->tambah_siswa();
-            } else {
-                $pesan = <<<EOL
-                        <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
-                        <div class="text-white">Siswa dengan nama $nama_lengkap Sudah Terdaftar </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        EOL;
-                $this->session->set_flashdata('message', $pesan);
-                $data['title'] = "Tambah Siswa | $this->web";
-                $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
-                $data['kelas'] = $this->db->get('kelas')->result_array();
-                $this->load->view('template/admin/head', $data);
-                $this->load->view('template/admin/sidebar');
-                $this->load->view('template/admin/topbar');
-                $this->load->view('admin/siswa/tambah_siswa');
-                $this->load->view('template/admin/footer');
-            }
+            $this->M_admin_insert->tambah_siswa();
         }
     }
     public function detail_siswa($NIS = null)
@@ -200,7 +182,9 @@ class Siswa extends CI_Controller
         $this->M_admin_delete->hapus('siswa', ['NIS' => $NIS]);
         $result = $this->db->affected_rows();
         if ($result > 0) {
-            unlink(FCPATH . 'assets/pribadi/img/siswa/' . $foto);
+            if ($foto != 'default-L.jpg' and $foto != 'default-P.jpg') {
+                unlink(FCPATH . 'assets/pribadi/img/siswa/' . $foto);
+            }
             $this->M_admin_delete->hapus('kelas_siswa', ['NIS' => $NIS]);
             $pesan = <<<EOL
                 <div class="alert alert-success border-0 bg-success alert-dismissible fade show">

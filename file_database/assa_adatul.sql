@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 01 Agu 2021 pada 08.15
+-- Waktu pembuatan: 02 Agu 2021 pada 06.02
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -46,7 +46,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id_admin`, `nama_lengkap`, `level`, `jenis_kelamin`, `username`, `email`, `alamat`, `no_telp`, `foto`, `is_active`, `password`) VALUES
-(1, 'Admin Assa\'adatul', 'administrator', 'L', 'admin', 'admin@hotmail.com', 'Jakarta', '0812348654', '', 'Y', '81fccaf9f00a8441b77b18fa2c8010f4');
+(1, 'Admin Assa\'adatul', 'administrator', 'L', 'admin', 'admin@hotmail.com', 'Jakarta', '0812348654', 'gambar1627841466.png', 'Y', '81fccaf9f00a8441b77b18fa2c8010f4');
 
 -- --------------------------------------------------------
 
@@ -182,7 +182,15 @@ INSERT INTO `nilai_siswa` (`id_ns`, `id_kriteria`, `NIS`, `nilai`, `grade`, `kel
 (36, 1, 2210002, 100, 'A', 'X', '2021/2022'),
 (37, 2, 2210002, 85, 'B', 'X', '2021/2022'),
 (38, 3, 2210002, 75, 'A', 'X', '2021/2022'),
-(39, 5, 2210002, 90, 'A', 'X', '2021/2022');
+(39, 5, 2210002, 90, 'A', 'X', '2021/2022'),
+(40, 1, 2210001, 100, 'A', 'XI', '2021/2022'),
+(41, 2, 2210001, 90, 'A', 'XI', '2021/2022'),
+(42, 3, 2210001, 80, 'B', 'XI', '2021/2022'),
+(43, 5, 2210001, 70, 'C', 'XI', '2021/2022'),
+(44, 1, 2210002, 70, 'D', 'XI', '2021/2022'),
+(45, 2, 2210002, 80, 'C', 'XI', '2021/2022'),
+(46, 3, 2210002, 90, 'B', 'XI', '2021/2022'),
+(47, 5, 2210002, 100, 'A', 'XI', '2021/2022');
 
 -- --------------------------------------------------------
 
@@ -228,6 +236,7 @@ CREATE TABLE `v_admin` (
 ,`email` varchar(128)
 ,`no_telp` varchar(13)
 ,`status_aktif` enum('Y','N')
+,`foto` varchar(250)
 );
 
 -- --------------------------------------------------------
@@ -308,7 +317,7 @@ CREATE TABLE `v_siswa_non_active` (
 --
 DROP TABLE IF EXISTS `v_admin`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_admin`  AS SELECT `admin`.`id_admin` AS `id_admin`, `admin`.`nama_lengkap` AS `nama_lengkap`, `admin`.`level` AS `level`, `admin`.`email` AS `email`, `admin`.`no_telp` AS `no_telp`, `admin`.`is_active` AS `status_aktif` FROM `admin` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_admin`  AS SELECT `admin`.`id_admin` AS `id_admin`, `admin`.`nama_lengkap` AS `nama_lengkap`, `admin`.`level` AS `level`, `admin`.`email` AS `email`, `admin`.`no_telp` AS `no_telp`, `admin`.`is_active` AS `status_aktif`, `admin`.`foto` AS `foto` FROM `admin` ;
 
 -- --------------------------------------------------------
 
@@ -391,7 +400,7 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `controller_access`
@@ -415,7 +424,7 @@ ALTER TABLE `kriteria`
 -- AUTO_INCREMENT untuk tabel `nilai_siswa`
 --
 ALTER TABLE `nilai_siswa`
-  MODIFY `id_ns` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id_ns` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

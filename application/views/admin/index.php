@@ -51,9 +51,45 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!--end row-->
+
+        <div class="col-12">
+            <div class="card radius-10 overflow-hidden w-100">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <caption>
+                            <div class="text-center">
+                                <h4 class="mb-0">Kriteria</h4>
+                                <hr>
+                            </div>
+                        </caption>
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Nama Kriteria</th>
+                                    <th>Bobot</th>
+                                    <th>normalisasi</th>
+                                    <th>Persentase</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $total_bobot = sum_bobot($kriteria);
+                                foreach ($kriteria as $k) : ?>
+                                    <tr>
+                                        <td><?= $k['kriteria'] ?></td>
+                                        <td class="text-center"><?= $k['bobot']; ?></td>
+                                        <th class="text-center"><?= round($k['bobot'] / $total_bobot, 2); ?></th>
+                                        <th class="text-center"><?= round(($k['bobot'] / $total_bobot) * 100, 0); ?> %</th>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!--end page wrapper -->

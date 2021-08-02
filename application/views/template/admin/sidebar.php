@@ -69,7 +69,7 @@
             </ul>
         </li>
         <li>
-            <a href="<?= base_url(''); ?>">
+            <a href="<?= base_url('admin/analisis'); ?>">
                 <div class="parent-icon"><i class='bx bx-analyse'></i>
                 </div>
                 <div class="menu-title">Hasil Analisis</div>

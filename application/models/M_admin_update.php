@@ -166,12 +166,31 @@ class M_admin_update extends CI_Model
             $nama_kriteria = str_replace(" ", "_", $k['kriteria']);
             $nilai_kriteria = $this->input->post($nama_kriteria);
             $id_kriteria = $k['id_kriteria'];
-            $isi = [
-                'nilai' => $nilai_kriteria
-            ];
-            $this->db->update('nilai_siswa', $isi, "NIS = $NIS AND id_kriteria = $id_kriteria AND kelas = '$kelas'");
-            $result = $this->db->affected_rows();
-            array_push($hasil, $result);
+            $cek_kriteria = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS)), 'id_kriteria' => $id_kriteria])->num_rows();
+            if (!$cek_kriteria) {
+                $grade = $this->db->query("SELECT grade FROM grade_nilai WHERE nilai_max >= $nilai_kriteria ORDER BY nilai_max ASC LIMIT 1")->row_array();
+                $grade = $grade['grade'];
+                $id_kriteria = $k['id_kriteria'];
+                $tahun_ajaran = date('Y') . "/" . (date('Y') + 1);
+                $isi = [
+                    'id_kriteria' => $id_kriteria,
+                    'NIS' => $NIS,
+                    'nilai' => $nilai_kriteria,
+                    'grade' => $grade,
+                    'kelas' => $kelas,
+                    'tahun_ajaran' => $tahun_ajaran
+                ];
+                $this->db->insert('nilai_siswa', $isi);
+                $result = $this->db->affected_rows();
+                array_push($hasil, $result);
+            } else {
+                $isi = [
+                    'nilai' => $nilai_kriteria
+                ];
+                $this->db->update('nilai_siswa', $isi, "NIS = $NIS AND id_kriteria = $id_kriteria AND kelas = '$kelas'");
+                $result = $this->db->affected_rows();
+                array_push($hasil, $result);
+            }
         }
         if (in_array(1, $hasil)) {
             $pesan = <<<EOL
@@ -181,7 +200,7 @@ class M_admin_update extends CI_Model
                 </div>
                 EOL;
             $this->session->set_flashdata('message', $pesan);
-            redirect('admin/penilaian/edit_penilaian/' . $NIS);
+            redirect($this->session->userdata('previous_url'));
         } else {
             $cek_nilai = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS))])->num_rows();
             if (!$cek_nilai) {
@@ -212,7 +231,7 @@ class M_admin_update extends CI_Model
                         </div>
                         EOL;
                     $this->session->set_flashdata('message', $pesan);
-                    redirect('admin/penilaian/index/' . id_kelas($NIS));
+                    redirect($this->session->userdata('previous_url'));
                 } else {
                     $pesan = <<<EOL
                         <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
@@ -231,7 +250,7 @@ class M_admin_update extends CI_Model
                     </div>
                     EOL;
                 $this->session->set_flashdata('message', $pesan);
-                redirect($this->session->userdata('previous_url'));
+                redirect('admin/penilaian/edit_penilaian/' . $NIS);
             }
         }
     }

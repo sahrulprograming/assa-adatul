@@ -120,6 +120,7 @@
                                 <div class="modal-footer">
                                     <?= form_open('admin/pengguna/reset_password'); ?>
                                     <input type="hidden" value="<?= $admin[$dk[0]]; ?>" name="<?= $dk[0]; ?>">
+                                    <input type="hidden" value="<?= $admin['foto']; ?>" name="foto_lama">
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-secondary">Reset</button>
                                     </form>

@@ -246,6 +246,31 @@ class M_admin_update extends CI_Model
                 $this->db->update('admin', $isi, "id_admin = $id_admin");
                 $result = $this->db->affected_rows();
                 array_push($hasil, $result);
+            } else {
+                $foto = $_FILES['foto']['name'];
+                if ($foto) {
+                    $config['allowed_types'] = 'jpg|png|jpeg';
+                    $config['max_size']     = '2048';
+                    $config['upload_path'] = './assets/pribadi/img/admin/';
+                    $config['file_name'] = 'gambar' . time();
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('foto')) {
+                        $foto = $this->upload->data('file_name');
+                        $this->db->update('admin', ['foto' => $foto], "id_admin = $id_admin");
+                        $result = $this->db->affected_rows();
+                        array_push($hasil, $result);
+                        $foto_lama = $this->input->post('foto_lama');
+                        if ($foto_lama != 'default-P.jpg' and $foto_lama != 'default-L.jpg') {
+                            unlink(FCPATH . 'assets/pribadi/img/admin/' . $foto_lama);
+                        }
+                    } else {
+                        $error = $this->upload->display_errors();
+                        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $error . '</div>');
+                        redirect('admin/pengguna/edit_pengguna/' . $id_admin);
+                    }
+                }
             }
         }
         if (in_array(1, $hasil)) {

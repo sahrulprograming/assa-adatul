@@ -18,7 +18,7 @@
                         <h5 class="mb-0 text-info"><?= $judul; ?></h5>
                     </div>
                     <hr />
-                    <?= form_open_multipart("admin/kriteria/edit_kriteria/"); ?>
+                    <?= form_open_multipart("admin/kriteria/edit_kriteria/" . $kriteria['id_kriteria']); ?>
                     <div class="row mb-3">
                         <label for="kriteria" class="col-sm-3 col-form-label">Kriteria</label>
                         <div class="col-sm-9">

@@ -43,18 +43,6 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="<?= base_url('admin/kelas'); ?>">
-                        <i data-feather="chevrons-right"></i>
-                        <div class="menu-title">Data Kelas</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?= base_url('admin/kriteria'); ?>">
-                        <i data-feather="chevrons-right"></i>
-                        <div class="menu-title">Data Kriteria</div>
-                    </a>
-                </li>
-                <li>
                     <a href="javascript:;" class="has-arrow">
                         <i data-feather="chevrons-right"></i>
                         <div class="menu-title">Nilai Siswa</div>
@@ -65,6 +53,18 @@
                             </li>
                         <?php endforeach; ?>
                     </ul>
+                </li>
+                <li>
+                    <a href="<?= base_url('admin/kelas'); ?>">
+                        <i data-feather="chevron-right"></i>
+                        <div class="menu-title">Data Kelas</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= base_url('admin/kriteria'); ?>">
+                        <i data-feather="chevron-right"></i>
+                        <div class="menu-title">Data Kriteria</div>
+                    </a>
                 </li>
             </ul>
         </li>

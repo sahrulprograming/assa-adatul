@@ -32,7 +32,7 @@
                         <div class="row mb-3">
                             <label for="<?= $nama_kriteria; ?>" class="col-sm-3 col-form-label"><?= str_replace("_", " ", $nama_kriteria); ?></label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control" id="<?= $nama_kriteria; ?>" name="<?= $nama_kriteria; ?>" value="<?= $nilai_siswa ? $nilai_siswa['nilai'] : set_value($nama_kriteria); ?>" placeholder="Masukan Angka">
+                                <input type="number" step="0.01" class="form-control" id="<?= $nama_kriteria; ?>" name="<?= $nama_kriteria; ?>" value="<?= $nilai_siswa ? $nilai_siswa['nilai'] : set_value($nama_kriteria); ?>" placeholder="Masukan Angka">
                                 <?= form_error("$nama_kriteria", '<small class="text-danger">', '</small>'); ?>
                             </div>
                         </div>

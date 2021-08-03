@@ -28,7 +28,7 @@ class Siswa extends CI_Controller
         $cek_kelas = $this->db->get_where('kelas', ['id_kelas' => $id_kelas])->row_array();
         if ($cek_kelas) {
             $data['judul'] = "DATA SISWA KELAS " . nama_kelas($id_kelas);
-            $data['title'] = "Data Siswa | $this->web";
+            $data['title'] = "Data Siswa " . nama_kelas($id_kelas) . " | $this->web";
             $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
             $data['kelas'] = $this->db->get('kelas')->result_array();
             $data['siswa'] = $this->M_admin_select->select_all('v_kelas_siswa', ['id_kelas' => $id_kelas]);
@@ -103,7 +103,7 @@ class Siswa extends CI_Controller
     {
         $cek_NIS = $this->db->get_where('siswa', ['NIS' => $NIS])->row_array();
         if ($cek_NIS) {
-            $data['title'] = "Data Siswa | $this->web";
+            $data['title'] = "Detail Siswa | $this->web";
             $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
             $data['kelas'] = $this->db->get('kelas')->result_array();
             $cek_active = $this->M_admin_select->data_profile('siswa', ['NIS' => $NIS]);
@@ -153,7 +153,7 @@ class Siswa extends CI_Controller
             $this->form_validation->set_rules('no_hp', 'nohp', 'trim');
 
             if ($this->form_validation->run() == false) {
-                $data['title'] = "Dasboard | $this->web";
+                $data['title'] = "Edit Siswa | $this->web";
                 $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
                 $data['kelas'] = $this->db->get('kelas')->result_array();
                 $cek_active = $this->M_admin_select->data_profile('siswa', ['NIS' => $NIS]);

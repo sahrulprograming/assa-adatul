@@ -116,7 +116,6 @@ class M_admin_update extends CI_Model
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 EOL;
-            $this->session->set_flashdata('message', $pesan);
         } else {
             $pesan = <<<EOL
                 <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
@@ -124,8 +123,8 @@ class M_admin_update extends CI_Model
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 EOL;
-            $this->session->set_flashdata('message', $pesan);
         }
+        $this->session->set_flashdata('message', $pesan);
         redirect('admin/kelas/edit_kelas/' . $id_kelas);
     }
     public function edit_kriteria($id_kriteria)
@@ -166,10 +165,10 @@ class M_admin_update extends CI_Model
             $nama_kriteria = str_replace(" ", "_", $k['kriteria']);
             $nilai_kriteria = $this->input->post($nama_kriteria);
             $id_kriteria = $k['id_kriteria'];
+            $grade = $this->db->query("SELECT grade FROM grade_nilai WHERE nilai_max >= $nilai_kriteria ORDER BY nilai_max ASC LIMIT 1")->row_array();
+            $grade = $grade['grade'];
             $cek_kriteria = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS)), 'id_kriteria' => $id_kriteria])->num_rows();
             if (!$cek_kriteria) {
-                $grade = $this->db->query("SELECT grade FROM grade_nilai WHERE nilai_max >= $nilai_kriteria ORDER BY nilai_max ASC LIMIT 1")->row_array();
-                $grade = $grade['grade'];
                 $id_kriteria = $k['id_kriteria'];
                 $tahun_ajaran = date('Y') . "/" . (date('Y') + 1);
                 $isi = [
@@ -185,7 +184,8 @@ class M_admin_update extends CI_Model
                 array_push($hasil, $result);
             } else {
                 $isi = [
-                    'nilai' => $nilai_kriteria
+                    'nilai' => $nilai_kriteria,
+                    'grade' => $grade
                 ];
                 $this->db->update('nilai_siswa', $isi, "NIS = $NIS AND id_kriteria = $id_kriteria AND kelas = '$kelas'");
                 $result = $this->db->affected_rows();

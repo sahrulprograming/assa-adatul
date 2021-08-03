@@ -24,8 +24,9 @@ class Kelas extends CI_Controller
     }
     public function tambah_kelas()
     {
-        $this->form_validation->set_rules('nama_kelas', 'Nk', 'required|trim', [
+        $this->form_validation->set_rules('nama_kelas', 'Nk', 'required|trim|is_unique[kelas.nama_kelas]', [
             'required' => 'Nama Kelas wajib di isi',
+            'is_unique' => 'Nama Kelas ' . $this->input->post('nama_kelas') . " sudah tersedia"
         ]);
         $this->form_validation->set_rules('nama_ruangan', 'Nr', 'required|trim', [
             'required' => 'Nama Ruangan wajib di isi',
@@ -43,36 +44,20 @@ class Kelas extends CI_Controller
             $this->load->view('admin/kelas/tambah_kelas');
             $this->load->view('template/admin/footer');
         } else {
-            $nama_kelas = $this->input->post('nama_kelas');
-            $cek_kelas = $this->db->get_where('kelas', ['nama_kelas' => $nama_kelas])->row_array();
-            if (!$cek_kelas) {
-                $this->M_admin_insert->tambah_kelas();
-            } else {
-                $pesan = <<<EOL
-                <div class="alert alert-danger border-0 bg-danger alert-dismissible fade show">
-                <div class="text-white">Nama kelas $nama_kelas sudah ada!</div>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                EOL;
-                $this->session->set_flashdata('message', $pesan);
-                $data['title'] = "Edit Kelas | " . $this->web;
-                $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
-                $data['kelas'] = $this->db->get('kelas')->result_array();
-                $this->load->view('template/admin/head', $data);
-                $this->load->view('template/admin/sidebar');
-                $this->load->view('template/admin/topbar');
-                $this->load->view('admin/kelas/tambah_kelas');
-                $this->load->view('template/admin/footer');
-            }
+            $this->M_admin_insert->tambah_kelas();
         }
     }
     public function edit_kelas($id_kelas = null)
     {
         $cek_id = $this->db->get_where('kelas', ['id_kelas' => $id_kelas])->row_array();
         if ($cek_id) {
-            $this->form_validation->set_rules('nama_kelas', 'Nk', 'required|trim', [
-                'required' => 'Nama Kelas wajib di isi',
-            ]);
+            $nama_kelas = $this->input->post('nama_kelas');
+            if ($cek_id['nama_kelas'] != $nama_kelas) {
+                $this->form_validation->set_rules('nama_kelas', 'Nk', 'required|trim|is_unique[kelas.nama_kelas]', [
+                    'required' => 'Nama Kelas wajib di isi',
+                    'is_unique' => 'Nama Kelas ' . $nama_kelas . " sudah digunakan"
+                ]);
+            }
             $this->form_validation->set_rules('nama_ruangan', 'Nr', 'required|trim', [
                 'required' => 'Nama Ruangan wajib di isi',
             ]);

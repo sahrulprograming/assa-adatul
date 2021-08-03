@@ -29,7 +29,7 @@
                     <div class="row mb-3">
                         <label for="bobot" class="col-sm-3 col-form-label">Bobot</label>
                         <div class="col-sm-9">
-                            <input type="number" class="form-control" id="bobot" name="bobot" value="<?= $kriteria['bobot']; ?>" placeholder="Masukan jumlah bobot">
+                            <input type="number" step="0.01" class="form-control" id="bobot" name="bobot" value="<?= $kriteria['bobot']; ?>" placeholder="Masukan jumlah bobot">
                             <?= form_error('bobot', '<small class="text-danger">', '</small>'); ?>
                         </div>
                     </div>

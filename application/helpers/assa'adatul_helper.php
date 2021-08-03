@@ -120,7 +120,10 @@ function normalisasi_nilai($nilai_siswa, $kelas)
         $id_kriteria = $ns['id_kriteria'];
         $tahun_ajaran = date('Y') . "/" . (date('Y') + 1);
         // Mencari Nilai Maximum Berdasarkan Kriteria
-        $nilai = $ci->db->query("SELECT max(nilai) AS `nilai_max` FROM `nilai_siswa` WHERE id_kriteria = $id_kriteria  AND kelas = '$kelas' AND tahun_ajaran = '$tahun_ajaran'")->row_array();
+        $nilai = $ci->db->query("SELECT max(nilai) AS `nilai_max` FROM `nilai_siswa` 
+        INNER JOIN kelas_siswa ON nilai_siswa.NIS = kelas_siswa.NIS
+        INNER JOIN kelas ON kelas_siswa.id_kelas = kelas.id_kelas
+        WHERE id_kriteria = $id_kriteria  AND kelas.nama_kelas = '$kelas' AND tahun_ajaran = '$tahun_ajaran'")->row_array();
         // Normalisasi Nilai
         $normalisasi_nilai[$id_kriteria] = $ns['nilai'] / $nilai['nilai_max'];
     }

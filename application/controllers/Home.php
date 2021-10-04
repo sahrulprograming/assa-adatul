@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Home extends CI_Controller
 {
-
     public function index()
     {
         $data['nama'] = $this->session->userdata('nama');
@@ -20,15 +19,19 @@ class Home extends CI_Controller
         $NIS = $this->input->post('NIS');
         if ($NIS) {
             $data['nama'] = $this->session->userdata('nama');
-            $data['title'] = "Detail Nilai" . nama_web();
+            $data['title'] = 'Detail Nilai' . nama_web();
             $data['kriteria'] = $this->db->get('kriteria')->result_array();
-            $cek_active = $this->M_admin_select->data_profile('siswa', ['NIS' => $NIS]);
+            $cek_active = $this->M_admin_select->data_profile('siswa', [
+                'NIS' => $NIS,
+            ]);
             if ($cek_active['is_active'] == 'Y') {
                 $table = 'v_kelas_siswa';
             } else {
                 $table = 'v_siswa_non_active';
             }
-            $data['siswa'] = $this->M_admin_select->data_profile($table, ['NIS' => $NIS]);
+            $data['siswa'] = $this->M_admin_select->data_profile($table, [
+                'NIS' => $NIS,
+            ]);
             // $data['nilai_SAW'] = metode_SAW($NIS, $data['siswa']['nama_kelas']);
             // $data['nilai_rata2'] = $this->M_admin_select->nilai_rata2($NIS);
             $this->session->set_userdata('previous_url', current_url());

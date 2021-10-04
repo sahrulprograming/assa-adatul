@@ -26,16 +26,16 @@ class M_admin_select extends CI_Model
         return $this->db->get_where($table, $where)->row_array();
     }
 
-    public function nilai_rata2($NIS, $kelas)
+    public function nilai_rata2($NIS, $kelas, $semester)
     {
-        $data = $this->db->query("SELECT AVG(nilai) AS nilai_rata2 FROM v_nilai_siswa WHERE NIS = $NIS AND kelas = '$kelas'")->row_array();
+        $data = $this->db->query("SELECT AVG(nilai) AS nilai_rata2 FROM v_nilai_siswa WHERE NIS = $NIS AND kelas = '$kelas' AND semester = $semester")->row_array();
         return round($data['nilai_rata2'], 2);
     }
-    public function nilai_kriteria($NIS, $id_kriteria)
+    public function nilai_kriteria($NIS, $id_kriteria, $semester)
     {
         $kelas = $this->db->query("SELECT nama_kelas FROM v_kelas_siswa WHERE NIS = $NIS")->row_array();
         $kelas = $kelas['nama_kelas'];
-        $data = $this->db->get_where('v_nilai_siswa', ['NIS' => $NIS, 'id_kriteria' => $id_kriteria, 'kelas' => $kelas])->row_array();
+        $data = $this->db->get_where('v_nilai_siswa', ['NIS' => $NIS, 'id_kriteria' => $id_kriteria, 'kelas' => $kelas, 'semester' => $semester])->row_array();
         return $data;
     }
     public function rangking($kelas = null)

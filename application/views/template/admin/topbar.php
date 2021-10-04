@@ -30,7 +30,7 @@
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="javascript:;"><i class="bx bx-user"></i><span>Profile</span></a>
+                    <li><a class="dropdown-item" href="<?= base_url('admin/home/profile'); ?>"><i class="bx bx-user"></i><span>Profile</span></a>
                     </li>
                     <li>
                         <div class="dropdown-divider mb-0"></div>

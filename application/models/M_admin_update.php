@@ -157,7 +157,7 @@ class M_admin_update extends CI_Model
             redirect('admin/kriteria/edit_kriteria/' . $id_kriteria);
         }
     }
-    public function edit_penilaian($NIS, $kriteria)
+    public function edit_penilaian($NIS, $kriteria, $semester)
     {
         $kelas = nama_kelas(id_kelas($NIS));
         $hasil = [];
@@ -167,7 +167,7 @@ class M_admin_update extends CI_Model
             $id_kriteria = $k['id_kriteria'];
             $grade = $this->db->query("SELECT grade FROM grade_nilai WHERE nilai_max >= $nilai_kriteria ORDER BY nilai_max ASC LIMIT 1")->row_array();
             $grade = $grade['grade'];
-            $cek_kriteria = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS)), 'id_kriteria' => $id_kriteria])->num_rows();
+            $cek_kriteria = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS)), 'id_kriteria' => $id_kriteria, 'semester' => $semester])->num_rows();
             if (!$cek_kriteria) {
                 $id_kriteria = $k['id_kriteria'];
                 $tahun_ajaran = date('Y') . "/" . (date('Y') + 1);
@@ -177,7 +177,8 @@ class M_admin_update extends CI_Model
                     'nilai' => $nilai_kriteria,
                     'grade' => $grade,
                     'kelas' => $kelas,
-                    'tahun_ajaran' => $tahun_ajaran
+                    'tahun_ajaran' => $tahun_ajaran,
+                    'semester' => $semester
                 ];
                 $this->db->insert('nilai_siswa', $isi);
                 $result = $this->db->affected_rows();
@@ -202,7 +203,7 @@ class M_admin_update extends CI_Model
             $this->session->set_flashdata('message', $pesan);
             redirect($this->session->userdata('previous_url'));
         } else {
-            $cek_nilai = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS))])->num_rows();
+            $cek_nilai = $this->db->get_where('nilai_siswa', ['NIS' => $NIS, 'kelas' => nama_kelas(id_kelas($NIS)), 'semester' => $semester])->num_rows();
             if (!$cek_nilai) {
                 foreach ($kriteria as $k) {
                     $nama_kriteria = str_replace(" ", "_", $k['kriteria']);
@@ -217,7 +218,8 @@ class M_admin_update extends CI_Model
                         'nilai' => $nilai_kriteria,
                         'grade' => $grade,
                         'kelas' => $kelas,
-                        'tahun_ajaran' => $tahun_ajaran
+                        'tahun_ajaran' => $tahun_ajaran,
+                        'semester' => $semester
                     ];
                     $this->db->insert('nilai_siswa', $isi);
                     $result = $this->db->affected_rows();
@@ -226,7 +228,7 @@ class M_admin_update extends CI_Model
                 if (in_array(1, $hasil)) {
                     $pesan = <<<EOL
                         <div class="alert alert-success border-0 bg-success alert-dismissible fade show">
-                        <div class="text-white">Berhasil edit data penilaian!</div>
+                        <div class="text-white">Berhasil menambah data penilaian!</div>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         EOL;

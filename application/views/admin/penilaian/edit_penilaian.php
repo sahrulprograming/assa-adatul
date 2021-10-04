@@ -18,7 +18,7 @@
                         <h5 class="mb-0 text-info"><?= $judul; ?></h5>
                     </div>
                     <hr />
-                    <?= form_open_multipart("admin/penilaian/edit_penilaian/" . $NIS); ?>
+                    <?= form_open_multipart("admin/penilaian/edit_penilaian/" . $NIS . "/$semester"); ?>
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Nama Siswa</label>
                         <div class="col-sm-9">
@@ -27,7 +27,7 @@
                     </div>
                     <?php foreach ($kriteria as $k) :
                         $nama_kriteria = str_replace(" ", "_", $k['kriteria']);
-                        $nilai_siswa = $this->M_admin_select->nilai_kriteria($NIS, $k['id_kriteria']);
+                        $nilai_siswa = $this->M_admin_select->nilai_kriteria($NIS, $k['id_kriteria'], $semester);
                     ?>
                         <div class="row mb-3">
                             <label for="<?= $nama_kriteria; ?>" class="col-sm-3 col-form-label"><?= str_replace("_", " ", $nama_kriteria); ?></label>

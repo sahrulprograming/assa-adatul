@@ -59,7 +59,7 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php foreach ($kriteria as $k) : ?>
-                                                        <?php $nilai_kriteria = $this->M_admin_select->nilai_kriteria($siswa['NIS'], $k['id_kriteria']); ?>
+                                                        <?php $nilai_kriteria = $this->M_admin_select->nilai_kriteria($siswa['NIS'], $k['id_kriteria'], $semester); ?>
                                                         <tr class="text-center">
                                                             <th class="text-start"><?= $k['kriteria']; ?></th>
                                                             <td><?= $nilai_kriteria ? $nilai_kriteria['nilai'] : 'belum di nilai'; ?></td>

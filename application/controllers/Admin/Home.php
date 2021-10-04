@@ -23,6 +23,19 @@ class Home extends CI_Controller
         $this->load->view('template/admin/footer');
         $this->session->set_userdata('previous_url', current_url());
     }
+    public function profile()
+    {
+        $data['title'] = "Dasboard | $this->web";
+        $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
+        $data['kelas'] = $this->db->get('kelas')->result_array();
+        $data['admin'] = $this->db->get_where('admin', ['id_admin' => $this->session->userdata('id')])->row_array();
+        $this->load->view('template/admin/head', $data);
+        $this->load->view('template/admin/sidebar');
+        $this->load->view('template/admin/topbar');
+        $this->load->view('admin/profile');
+        $this->load->view('template/admin/footer');
+        $this->session->set_userdata('previous_url', current_url());
+    }
     public function notfound()
     {
         $data['title'] = "Tidak Ditemukan | assa'adatul";

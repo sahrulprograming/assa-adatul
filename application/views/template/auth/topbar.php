@@ -1,7 +1,7 @@
 <header class="login-header shadow d-none d-sm-block">
     <nav class="bg-white rounded fixed-top rounded-0">
         <div class="container p-3">
-            <a class="logo" href="#">
+            <a class="logo" href="<?= base_url(); ?>">
                 <img src="<?= base_url(); ?>assets/logo/logo.png" width="70" height="70" alt="Logo" />
             </a>
             <div class="text-center">

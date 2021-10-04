@@ -9,15 +9,100 @@
 	margin-bottom: 30px;
 }
 
-.hero-section{
-    text-align: center;
+.hero-section {
+	text-align: center;
 }
 
-.bg-biru-muda{
+.bg-biru-muda {
 	background: rgb(178, 230, 171) !important;
 }
 
-nav .container .logo{
+nav .container .logo {
 	position: absolute;
 	left: 20px;
+}
+
+/* CSS Ukuran Tablet ke atas */
+@media (min-width: 768px) { 
+	div.hero-bg {
+		position: relative;
+		height: 15rem;
+		width: 100%;
+		background: rgb(63,94,251);
+		background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+	}
+	div.hero-bg::after{
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		height: 5rem;
+		width: 100%;
+		background:rgba(12, 12, 12, 0.3);
+	}
+	
+	.profile {
+		position: absolute;
+		z-index: 2;
+		top: 10rem;
+		width: 30rem;
+		height: 9rem;
+		/* background: red; */
+		/* overflow: hidden; */
+	}
+	
+	.profile img{
+		height: 9rem;
+		width: 9rem;
+		margin-left: 1.5rem;
+		overflow: hidden;
+	}
+
+	.detail-profile .card{
+		margin-top: 8rem;
+	}
+}
+
+/* CSS Ukuran Handphone ke bawah */
+@media (max-width: 575.98px) { 
+	div.hero-bg {
+		position: relative;
+		height: 22rem;
+		width: 100%;
+		background: rgb(63,94,251);
+		background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+	}
+	div.hero-bg::after{
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: 0;
+		z-index: 1;
+		background:rgba(12, 12, 12, 0.3);
+	}
+	.profile {
+		position: absolute;
+		z-index: 2;
+		top: 2rem;
+		text-align: center;
+		/* background: red; */
+		/* overflow: hidden; */
+	}
+	.profile img{
+		display: block;
+		height: 9rem;
+		width: 9rem;
+		margin:auto;
+		overflow: hidden;
+	}
+	.profile .level,
+	.profile .level h6,
+	.profile .alamat,
+	.profile .alamat h6{
+		color: #FFF !important;
+	}
 }

@@ -9,7 +9,7 @@ class Penilaian extends CI_Controller
         $this->web = nama_web();
         cek_status_login();
     }
-    public function index($id_kelas = null)
+    public function index($id_kelas = null, $semester)
     {
         $cek_id = $this->db->get_where('kelas', ['id_kelas' => $id_kelas]);
         if ($cek_id) {
@@ -19,6 +19,7 @@ class Penilaian extends CI_Controller
             $data['kelas'] = $this->db->get('kelas')->result_array();
             $data['kriteria'] = $this->db->get('kriteria')->result_array();
             $data['siswa'] = $this->db->get_where('v_kelas_siswa', ['id_kelas' => $id_kelas])->result_array();
+            $data['semester'] = $semester;
             $this->load->view('template/admin/head', $data);
             $this->load->view('template/admin/sidebar');
             $this->load->view('template/admin/topbar');
@@ -29,7 +30,7 @@ class Penilaian extends CI_Controller
             redirect($this->session->userdata('previous_url'));
         }
     }
-    public function detail_penilaian($NIS = null)
+    public function detail_penilaian($NIS = null, $semester = null)
     {
         $cek_NIS = $this->db->get_where('siswa', ['NIS' => $NIS])->row_array();
         if ($cek_NIS) {
@@ -44,8 +45,9 @@ class Penilaian extends CI_Controller
                 $table = 'v_siswa_non_active';
             }
             $data['siswa'] = $this->M_admin_select->data_profile($table, ['NIS' => $NIS]);
-            $data['nilai_SAW'] = metode_SAW($NIS, $data['siswa']['nama_kelas']);
-            $data['nilai_rata2'] = $this->M_admin_select->nilai_rata2($NIS, $data['siswa']['nama_kelas']);
+            $data['nilai_SAW'] = metode_SAW($NIS, $data['siswa']['nama_kelas'], $semester);
+            $data['nilai_rata2'] = $this->M_admin_select->nilai_rata2($NIS, $data['siswa']['nama_kelas'] ,$semester);
+            $data['semester'] = $semester;
             $this->load->view('template/admin/head', $data);
             $this->load->view('template/admin/sidebar');
             $this->load->view('template/admin/topbar');
@@ -55,7 +57,7 @@ class Penilaian extends CI_Controller
             redirect('admin/siswa/semua_data_siswa');
         }
     }
-    public function edit_penilaian($NIS = null)
+    public function edit_penilaian($NIS = null, $semester = null)
     {
         $cek_NIS = $this->db->get_where('siswa', ['NIS' => $NIS])->row_array();
         if ($cek_NIS) {
@@ -75,13 +77,14 @@ class Penilaian extends CI_Controller
                 $data['profile'] = $this->M_admin_select->data_profile('admin', ['id_admin' => $this->session->userdata('id')]);
                 $data['kelas'] = $this->db->get('kelas')->result_array();
                 $data['NIS'] = $NIS;
+                $data['semester'] = $semester;
                 $this->load->view('template/admin/head', $data);
                 $this->load->view('template/admin/sidebar');
                 $this->load->view('template/admin/topbar');
                 $this->load->view('admin/penilaian/edit_penilaian');
                 $this->load->view('template/admin/footer');
             } else {
-                $this->M_admin_update->edit_penilaian($NIS, $data['kriteria']);
+                $this->M_admin_update->edit_penilaian($NIS, $data['kriteria'], $semester);
             }
         } else {
             redirect('admin/siswa/semua_data_siswa');

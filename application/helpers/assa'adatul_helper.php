@@ -120,20 +120,22 @@ function normalisasi_nilai($nilai_siswa, $kelas)
         $id_kriteria = $ns['id_kriteria'];
         $tahun_ajaran = date('Y') . "/" . (date('Y') + 1);
         // Mencari Nilai Maximum Berdasarkan Kriteria
+        $smt = $ns['semester'];
         $nilai = $ci->db->query("SELECT max(nilai) AS `nilai_max` FROM `nilai_siswa` 
         INNER JOIN kelas_siswa ON nilai_siswa.NIS = kelas_siswa.NIS
         INNER JOIN kelas ON kelas_siswa.id_kelas = kelas.id_kelas
-        WHERE id_kriteria = $id_kriteria  AND kelas.nama_kelas = '$kelas' AND tahun_ajaran = '$tahun_ajaran'")->row_array();
+        WHERE id_kriteria = $id_kriteria  AND kelas.nama_kelas = '$kelas' AND tahun_ajaran = '$tahun_ajaran' AND semester = $smt")->row_array();
         // Normalisasi Nilai
         $normalisasi_nilai[$id_kriteria] = $ns['nilai'] / $nilai['nilai_max'];
     }
     return $normalisasi_nilai;
 }
 
-function metode_SAW($NIS, $kelas)
+function metode_SAW($NIS = null, $kelas = null, $smt = null)
 {
     $ci = get_instance();
     // mengambil data kriteria
+
     $kriteria = $ci->db->query('SELECT * FROM kriteria')->result_array();
 
     // Menjumlahkan Total Bobot
@@ -143,7 +145,9 @@ function metode_SAW($NIS, $kelas)
     $bobot_normalisasi = normalisasi_bobot($kriteria, $total_bobot);
 
     // Mengambil data nilai siswa
-    $nilai_siswa = $ci->db->get_where('v_nilai_siswa', ['NIS' => $NIS, 'kelas' => $kelas])->result_array();
+    $nilai_siswa = $ci->db->get_where('v_nilai_siswa', ['NIS' => $NIS, 'kelas' => $kelas, 'semester' => $smt])->result_array();
+    // var_dump($nilai_siswa);
+    // die;
 
     // Normalisasi nilai siswa
     // RUMUS = nilai / nilai_max

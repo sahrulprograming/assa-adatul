@@ -8,6 +8,7 @@ class Home extends CI_Controller
         $data['nama'] = $this->session->userdata('nama');
         $data['title'] = nama_web();
         $data['kelas'] = $this->M_admin_select->data_kelas();
+        $data['kelas2'] = $this->M_admin_select->data_kelas();
         $this->session->set_userdata('previous_url', current_url());
         $this->load->view('template/user/haed', $data);
         $this->load->view('template/user/topbar');

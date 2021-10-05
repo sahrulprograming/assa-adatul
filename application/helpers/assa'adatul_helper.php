@@ -152,13 +152,13 @@ function metode_SAW($NIS = null, $kelas = null, $smt = null)
     // Normalisasi nilai siswa
     // RUMUS = nilai / nilai_max
     $nilai_normalisasi = normalisasi_nilai($nilai_siswa, $kelas);
-
     // RUMUS SAW 
     // menambahkan suruh akumulasi nilai kriteria siswa
     // RUMUS = (nilai_normalisasi(1) * bobot_normalisasi(1)) + (nilai_normalisasi(n) * bobot_normalisasi(n)) 
     $total = 0;
     foreach ($nilai_siswa as $sk) {
         $total = $total + $nilai_normalisasi[$sk['id_kriteria']] * $bobot_normalisasi[$sk['id_kriteria']];
+        // var_dump($total);
     }
     return round($total * 100, 2);
 }

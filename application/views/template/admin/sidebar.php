@@ -1,10 +1,14 @@
 <div class="sidebar-wrapper" data-simplebar="true">
 	<div class="sidebar-header">
 		<div>
-			<img src="<?= base_url() ?>assets/logo/logo.png" class="logo-icon" alt="logo icon">
+			<a href="<?= base_url(); ?>">
+				<img src="<?= base_url() ?>assets/logo/logo.png" class="logo-icon" alt="logo icon">
+			</a>
 		</div>
 		<div>
-			<h4 class="logo-text">Assa'adatul</h4>
+			<a href="<?= base_url(); ?>">
+				<h4 class="logo-text">Assa'adatul</h4>
+			</a>
 		</div>
 		<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
 		</div>

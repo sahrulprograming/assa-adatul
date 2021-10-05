@@ -38,10 +38,10 @@ class M_admin_select extends CI_Model
         $data = $this->db->get_where('v_nilai_siswa', ['NIS' => $NIS, 'id_kriteria' => $id_kriteria, 'kelas' => $kelas, 'semester' => $semester])->row_array();
         return $data;
     }
-    public function rangking($kelas = null)
+    public function rangking($kelas = null, $semester = null)
     {
         $tahun_ajaran = date('Y') . "/" . (date('Y') + 1);
-        $cek_nilai = $this->db->get_where('nilai_siswa', ['kelas' => $kelas, 'tahun_ajaran' => $tahun_ajaran])->result_array();
+        $cek_nilai = $this->db->get_where('nilai_siswa', ['kelas' => $kelas, 'tahun_ajaran' => $tahun_ajaran, 'semester' => $semester])->result_array();
         $data_SAW = [];
         if ($cek_nilai) {
             $kelas_siswa = $this->db->get_where('v_kelas_siswa', ['nama_kelas' => $kelas])->result_array();

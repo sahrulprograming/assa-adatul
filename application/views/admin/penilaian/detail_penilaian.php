@@ -34,6 +34,10 @@
                                             <td> : <?= $siswa['nama_kelas']; ?></td>
                                         </tr>
                                         <tr>
+                                            <th>Semester</th>
+                                            <td> : <?= $semester; ?></td>
+                                        </tr>
+                                        <tr>
                                             <th>Status Active</th>
                                             <?php if ($siswa['is_active'] == 'Y') : ?>
                                                 <td> : Active</td>

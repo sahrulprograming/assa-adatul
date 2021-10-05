@@ -46,7 +46,7 @@ class M_admin_select extends CI_Model
         if ($cek_nilai) {
             $kelas_siswa = $this->db->get_where('v_kelas_siswa', ['nama_kelas' => $kelas])->result_array();
             foreach ($kelas_siswa as $ks) {
-                $nilai_SAW = metode_SAW($ks['NIS'], $kelas);
+                $nilai_SAW = metode_SAW($ks['NIS'], $kelas, $semester);
                 $data_SAW[$ks['NIS']] = $nilai_SAW;
             }
             arsort($data_SAW);

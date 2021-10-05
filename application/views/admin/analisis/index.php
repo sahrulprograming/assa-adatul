@@ -46,7 +46,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php $ranking = $this->M_admin_select->rangking($kelas['nama_kelas'], '1');
+												<?php $ranking = $this->M_admin_select->rangking($kelas['nama_kelas'], 1);
                                     $no = 0;
                                     foreach ($ranking as $r) :
                                         $no++;
@@ -64,7 +64,7 @@
 													</td>
 													<td><?= metode_SAW($r, $kelas['nama_kelas'], 1); ?></td>
 													<td>
-														<?= form_open('home/detail_nilai'); ?>
+														<?= form_open('home/detail_nilai/1'); ?>
 														<input type="hidden" name="NIS" value="<?= $r; ?>">
 														<input type="hidden" name="kelas"
 															value="<?= $kelas['nama_kelas']; ?>">
@@ -122,7 +122,7 @@
 													</td>
 													<td><?= metode_SAW($r, $kelas['nama_kelas'], 2); ?></td>
 													<td>
-														<?= form_open('home/detail_nilai'); ?>
+														<?= form_open('home/detail_nilai/2'); ?>
 														<input type="hidden" name="NIS" value="<?= $r; ?>">
 														<input type="hidden" name="kelas"
 															value="<?= $kelas['nama_kelas']; ?>">

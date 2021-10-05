@@ -69,7 +69,7 @@
 													</td>
 													<td><?= metode_SAW($r, $kelas['nama_kelas'], 1); ?></td>
 													<td>
-														<?= form_open('home/detail_nilai'); ?>
+														<?= form_open('home/detail_nilai/1'); ?>
 														<input type="hidden" name="NIS" value="<?= $r; ?>">
 														<input type="hidden" name="kelas"
 															value="<?= $kelas['nama_kelas']; ?>">
@@ -127,7 +127,7 @@
 													</td>
 													<td><?= metode_SAW($r, $kelas['nama_kelas'], 2); ?></td>
 													<td>
-														<?= form_open('home/detail_nilai'); ?>
+														<?= form_open('home/detail_nilai/2'); ?>
 														<input type="hidden" name="NIS" value="<?= $r; ?>">
 														<input type="hidden" name="kelas"
 															value="<?= $kelas['nama_kelas']; ?>">

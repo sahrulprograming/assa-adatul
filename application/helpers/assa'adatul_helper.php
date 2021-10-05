@@ -146,8 +146,6 @@ function metode_SAW($NIS = null, $kelas = null, $smt = null)
 
     // Mengambil data nilai siswa
     $nilai_siswa = $ci->db->get_where('v_nilai_siswa', ['NIS' => $NIS, 'kelas' => $kelas, 'semester' => $smt])->result_array();
-    // var_dump($nilai_siswa);
-    // die;
 
     // Normalisasi nilai siswa
     // RUMUS = nilai / nilai_max
@@ -158,7 +156,6 @@ function metode_SAW($NIS = null, $kelas = null, $smt = null)
     $total = 0;
     foreach ($nilai_siswa as $sk) {
         $total = $total + $nilai_normalisasi[$sk['id_kriteria']] * $bobot_normalisasi[$sk['id_kriteria']];
-        // var_dump($total);
     }
     return round($total * 100, 2);
 }

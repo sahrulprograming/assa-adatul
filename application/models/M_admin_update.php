@@ -188,7 +188,7 @@ class M_admin_update extends CI_Model
                     'nilai' => $nilai_kriteria,
                     'grade' => $grade
                 ];
-                $this->db->update('nilai_siswa', $isi, "NIS = $NIS AND id_kriteria = $id_kriteria AND kelas = '$kelas'");
+                $this->db->update('nilai_siswa', $isi, "NIS = $NIS AND id_kriteria = $id_kriteria AND kelas = '$kelas' AND semester = '$semester'");
                 $result = $this->db->affected_rows();
                 array_push($hasil, $result);
             }
@@ -252,7 +252,7 @@ class M_admin_update extends CI_Model
                     </div>
                     EOL;
                 $this->session->set_flashdata('message', $pesan);
-                redirect('admin/penilaian/edit_penilaian/' . $NIS);
+                redirect('admin/penilaian/edit_penilaian/' . $NIS . "/$semester");
             }
         }
     }

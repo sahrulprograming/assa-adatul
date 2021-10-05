@@ -15,13 +15,14 @@ class Home extends CI_Controller
         $this->load->view('home');
         $this->load->view('template/user/footer');
     }
-    public function detail_nilai()
+    public function detail_nilai($semester = null)
     {
         $NIS = $this->input->post('NIS');
         if ($NIS) {
             $data['nama'] = $this->session->userdata('nama');
             $data['title'] = 'Detail Nilai' . nama_web();
             $data['kriteria'] = $this->db->get('kriteria')->result_array();
+            $data['semester'] = $semester;
             $cek_active = $this->M_admin_select->data_profile('siswa', [
                 'NIS' => $NIS,
             ]);

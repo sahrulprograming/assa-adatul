@@ -61,7 +61,7 @@ class Penilaian extends CI_Controller
     {
         $cek_NIS = $this->db->get_where('siswa', ['NIS' => $NIS])->row_array();
         if ($cek_NIS) {
-            // Mengambil Seluruh data kriteria
+            // Mengambil Seluruh data kriteria 
             $data['kriteria'] = $this->db->get('kriteria')->result_array();
             foreach ($data['kriteria'] as $data_kriteria) {
                 $kriteria = str_replace(" ", "_", $data_kriteria['kriteria']);
